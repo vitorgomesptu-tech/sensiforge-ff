@@ -1,1 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SensiPro Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ==================== TELA 1: HOME ==================== -->
+  <div id="home-screen" class="screen active">
+    <header class="top-bar">
+      <div class="brand-title">
+        <i class="fa-solid fa-fire-flame-curved glow-icon"></i>
+        <span>SENSI<span>PRO</span></span>
+      </div>
+      <div class="status-badge"><i class="fa-solid fa-shield-halved"></i> 100% Seguro</div>
+    </header>
+
+    <div class="content-body">
+      <!-- Dash Cards -->
+      <div class="dashboard-grid">
+        <div class="dash-card">
+          <i class="fa-solid fa-mobile-screen"></i>
+          <span class="dash-label">Dispositivo</span>
+          <strong id="dash-device">Detectando...</strong>
+        </div>
+        <div class="dash-card">
+          <i class="fa-solid fa-gauge-high"></i>
+          <span class="dash-label">DPI Recomendada</span>
+          <strong id="dash-dpi">580 DPI</strong>
+        </div>
+        <div class="dash-card highlight">
+          <i class="fa-solid fa-crown"></i>
+          <span class="dash-label">Modo</span>
+          <strong id="dash-mode">Pro Member</strong>
+        </div>
+      </div>
+
+      <!-- Seletor de Plataforma -->
+      <div class="section-title">Modo de Jogo</div>
+      <div class="platform-selector">
+        <button class="plat-btn active" onclick="setPlatform('mobile', this)">
+          <i class="fa-solid fa-mobile-button"></i>
+          <div>
+            <strong>Celulares / Tablet</strong>
+            <small>Configurações para Touchscreen</small>
+          </div>
+        </button>
+        <button class="plat-btn" onclick="setPlatform('mobilador', this)">
+          <i class="fa-solid fa-keyboard"></i>
+          <div>
+            <strong>Mobilador / PC</strong>
+            <small>Ajustes para Teclado e Mouse</small>
+          </div>
+        </button>
+      </div>
+
+      <!-- Pro Players Preset -->
+      <div class="section-title">Presets de Pro Players</div>
+      <div class="pro-scroll">
+        <div class="pro-card" onclick="loadProPreset('nobru')">
+          <div class="pro-avatar"><i class="fa-solid fa-user-ninja"></i></div>
+          <span>Rushador</span>
+        </div>
+        <div class="pro-card" onclick="loadProPreset('bak')">
+          <div class="pro-avatar"><i class="fa-solid fa-crosshair"></i></div>
+          <span>Precisão</span>
+        </div>
+        <div class="pro-card" onclick="loadProPreset('thurzin')">
+          <div class="pro-avatar"><i class="fa-solid fa-bolt"></i></div>
+          <span>Capador 1T</span>
+        </div>
+      </div>
+
+      <!-- Acesso aos Jogos -->
+      <div class="section-title">Iniciar Jogo</div>
+      <div class="game-launchers">
+        <button class="btn-game" onclick="launchGame('freefire')">
+          <i class="fa-solid fa-gamepad"></i> FREE FIRE
+        </button>
+        <button class="btn-game max" onclick="launchGame('freefiremax')">
+          <i class="fa-solid fa-fire"></i> FREE FIRE MAX
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TELA 2: SENSIBILIDADES POR ARMA ==================== -->
+  <div id="sensi-screen" class="screen">
+    <header class="top-bar">
+      <h2>Ajustes de Calibração</h2>
+    </header>
+
+    <div class="content-body">
+      <div class="weapon-sliders">
+        <div class="slider-box">
+          <div class="slider-header">
+            <span><i class="fa-solid fa-bullseye"></i> Arma de 1 Tiro (Carapina/SVD)</span>
+            <span class="val" id="val-1shot">120</span>
+          </div>
+          <input type="range" id="sensi-1shot" min="0" max="200" value="120" oninput="updateVal('1shot')" />
+        </div>
+
+        <div class="slider-box">
+          <div class="slider-header">
+            <span><i class="fa-solid fa-gun"></i> Submetralhadora (SMG)</span>
+            <span class="val" id="val-smg">150</span>
+          </div>
+          <input type="range" id="sensi-smg" min="0" max="200" value="150" oninput="updateVal('smg')" />
+        </div>
+
+        <div class="slider-box">
+          <div class="slider-header">
+            <span><i class="fa-solid fa-rifle"></i> Fuzil de Assalto (AR)</span>
+            <span class="val" id="val-ar">135</span>
+          </div>
+          <input type="range" id="sensi-ar" min="0" max="200" value="135" oninput="updateVal('ar')" />
+        </div>
+
+        <div class="slider-box">
+          <div class="slider-header">
+            <span><i class="fa-solid fa-shield-cat"></i> Espingardas (Doze)</span>
+            <span class="val" id="val-shotgun">160</span>
+          </div>
+          <input type="range" id="sensi-shotgun" min="0" max="200" value="160" oninput="updateVal('shotgun')" />
+        </div>
+
+        <div class="slider-box highlight">
+          <div class="slider-header">
+            <span><i class="fa-solid fa-hand-pointer"></i> Velocidade de Resposta</span>
+            <span class="val" id="val-touch">140</span>
+          </div>
+          <input type="range" id="sensi-touch" min="0" max="200" value="140" oninput="updateVal('touch')" />
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="copyWeaponSensi()">
+        <i class="fa-regular fa-copy"></i> COPIAR CONFIGURAÇÃO
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== TELA 3: COACH IA & ANALYZER ==================== -->
+  <div id="ai-screen" class="screen">
+    <header class="top-bar">
+      <h2>Coach IA & Análise</h2>
+    </header>
+
+    <div class="content-body">
+      <div class="ai-card">
+        <i class="fa-solid fa-brain glow-icon"></i>
+        <h3>Análise Inteligente de Sensibilidade</h3>
+        <p>Selecione seu estilo preferido para a IA calcular o arraste de tela perfeito.</p>
+      </div>
+
+      <div class="option-group">
+        <label>Tamanho do Botão de Atirar (Pixels)</label>
+        <div class="button-sizes">
+          <button class="size-btn" onclick="setBtnSize(45, this)">45%</button>
+          <button class="size-btn active" onclick="setBtnSize(55, this)">55%</button>
+          <button class="size-btn" onclick="setBtnSize(60, this)">60%</button>
+        </div>
+      </div>
+
+      <button class="btn-primary btn-glow" onclick="generateAISuggestion()">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> GERAR SENSI IDEAL
+      </button>
+
+      <div id="ai-results" class="ai-results-box hidden">
+        <h4>Recomendação da IA:</h4>
+        <div id="ai-output"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TELA 4: AJUSTES & DICAS ==================== -->
+  <div id="settings-screen" class="screen">
+    <header class="top-bar">
+      <h2>Otimização & Dicas</h2>
+    </header>
+
+    <div class="content-body">
+      <div class="toggle-list">
+        <div class="toggle-item">
+          <div>
+            <strong>Modo FPS Estável</strong>
+            <small>Dicas visuais para diminuir quedas de frame</small>
+          </div>
+          <label class="switch">
+            <input type="checkbox" checked />
+            <span class="slider-switch"></span>
+          </label>
+        </div>
+
+        <div class="toggle-item">
+          <div>
+            <strong>Otimização de Toque (HUD)</strong>
+            <small>Tamanhos recomendados para 2, 3 e 4 dedos</small>
+          </div>
+          <label class="switch">
+            <input type="checkbox" checked />
+            <span class="slider-switch"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FLOATING BOTTOM NAVIGATION ==================== -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="switchTab('home-screen', this)">
+      <i class="fa-solid fa-house"></i>
+      <span>Início</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('sensi-screen', this)">
+      <i class="fa-solid fa-sliders"></i>
+      <span>Sensi</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('ai-screen', this)">
+      <i class="fa-solid fa-robot"></i>
+      <span>Coach IA</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('settings-screen', this)">
+      <i class="fa-solid fa-gear"></i>
+      <span>Ajustes</span>
+    </button>
+  </nav>
+
+  <div id="toast" class="toast hidden">Mensagem</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
 
